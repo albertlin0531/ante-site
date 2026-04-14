@@ -1,0 +1,338 @@
+<!DOCTYPE html>
+<html lang="zh-TW">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Ante.</title>
+<link href="https://fonts.googleapis.com/css2?family=DM+Serif+Display:ital@0;1&family=DM+Sans:wght@300;400;500&display=swap" rel="stylesheet">
+<style>
+  *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+  :root {
+    --ink: #1a1a18; --ink-soft: #5a5a55; --ink-muted: #9a9a94;
+    --surface: #faf9f6; --surface-warm: #f2f0ea;
+    --accent: #2d5a3d; --accent-light: #e8f0eb; --accent-mid: #4a7c5a;
+    --border: rgba(26,26,24,0.1); --border-soft: rgba(26,26,24,0.06);
+  }
+  html { scroll-behavior: smooth; }
+  body { font-family: 'DM Sans', sans-serif; background: var(--surface); color: var(--ink); line-height: 1.6; font-size: 16px; }
+  nav { position: fixed; top: 0; left: 0; right: 0; z-index: 100; background: rgba(250,249,246,0.92); backdrop-filter: blur(12px); border-bottom: 0.5px solid var(--border); padding: 0 2rem; height: 60px; display: flex; align-items: center; justify-content: space-between; }
+  .nav-logo { font-family: 'DM Serif Display', serif; font-size: 18px; color: var(--ink); letter-spacing: -0.02em; }
+  .nav-logo span { color: var(--accent); }
+  .nav-cta { background: var(--accent); color: #fff; border: none; padding: 8px 20px; border-radius: 100px; font-size: 13px; font-family: 'DM Sans', sans-serif; font-weight: 500; cursor: pointer; transition: background 0.2s; }
+  .nav-cta:hover { background: var(--accent-mid); }
+  section { padding: 5rem 2rem; max-width: 900px; margin: 0 auto; }
+  .hero { padding-top: 8rem; padding-bottom: 4rem; display: grid; grid-template-columns: 1fr 1fr; gap: 4rem; align-items: center; max-width: 900px; margin: 0 auto; }
+  .hero-eyebrow { font-size: 11px; font-weight: 500; letter-spacing: 0.12em; text-transform: uppercase; color: var(--accent); margin-bottom: 1.2rem; display: flex; align-items: center; gap: 8px; }
+  .hero-eyebrow::before { content: ''; display: inline-block; width: 20px; height: 1px; background: var(--accent); }
+  .hero h1 { font-family: 'DM Serif Display', serif; font-size: clamp(2rem, 4vw, 2.8rem); line-height: 1.15; letter-spacing: -0.02em; color: var(--ink); margin-bottom: 1.5rem; }
+  .hero h1 em { font-style: italic; color: var(--accent); }
+  .hero-body { font-size: 16px; color: var(--ink-soft); line-height: 1.75; margin-bottom: 2rem; }
+  .hero-cta-group { display: flex; gap: 12px; flex-wrap: wrap; align-items: center; }
+  .btn-primary { background: var(--accent); color: #fff; border: none; padding: 12px 28px; border-radius: 100px; font-size: 14px; font-family: 'DM Sans', sans-serif; font-weight: 500; cursor: pointer; transition: background 0.2s; }
+  .btn-primary:hover { background: var(--accent-mid); }
+  .btn-ghost { background: transparent; color: var(--ink-soft); border: 0.5px solid var(--border); padding: 12px 24px; border-radius: 100px; font-size: 14px; font-family: 'DM Sans', sans-serif; cursor: pointer; transition: border-color 0.2s, color 0.2s; }
+  .btn-ghost:hover { border-color: var(--ink-soft); color: var(--ink); }
+  .hero-visual { background: var(--surface-warm); border-radius: 20px; border: 0.5px solid var(--border); padding: 1.5rem; display: flex; flex-direction: column; gap: 10px; }
+  .process-row { background: #fff; border: 0.5px solid var(--border); border-radius: 10px; padding: 12px 14px; display: flex; align-items: center; gap: 10px; font-size: 13px; }
+  .process-icon { width: 28px; height: 28px; border-radius: 8px; display: flex; align-items: center; justify-content: center; font-size: 14px; flex-shrink: 0; }
+  .process-row.before .process-icon { background: #fef3f2; }
+  .process-row.after .process-icon { background: var(--accent-light); }
+  .process-label { font-weight: 500; color: var(--ink); }
+  .process-sub { font-size: 11px; color: var(--ink-muted); margin-top: 1px; }
+  .process-badge { margin-left: auto; font-size: 11px; font-weight: 500; padding: 3px 8px; border-radius: 100px; white-space: nowrap; }
+  .badge-red { background: #fef3f2; color: #c0392b; }
+  .badge-green { background: var(--accent-light); color: var(--accent); }
+  .arrow-row { text-align: center; font-size: 18px; color: var(--ink-muted); padding: 2px 0; }
+  .divider { height: 0.5px; background: var(--border); max-width: 900px; margin: 0 auto; }
+  .section-eyebrow { font-size: 11px; font-weight: 500; letter-spacing: 0.12em; text-transform: uppercase; color: var(--ink-muted); margin-bottom: 1rem; display: flex; align-items: center; gap: 8px; }
+  .section-eyebrow::before { content: ''; display: inline-block; width: 16px; height: 1px; background: var(--ink-muted); }
+  .section-title { font-family: 'DM Serif Display', serif; font-size: clamp(1.6rem, 3vw, 2.2rem); line-height: 1.2; letter-spacing: -0.02em; margin-bottom: 1rem; }
+  .section-body { font-size: 16px; color: var(--ink-soft); line-height: 1.75; max-width: 560px; }
+  .steps-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 1.5rem; margin-top: 3rem; }
+  .step-card { background: #fff; border: 0.5px solid var(--border); border-radius: 16px; padding: 1.5rem; display: flex; flex-direction: column; }
+  .step-num { font-family: 'DM Serif Display', serif; font-size: 36px; color: var(--surface-warm); line-height: 1; margin-bottom: 0.8rem; -webkit-text-stroke: 1px var(--border); }
+  .step-title { font-weight: 500; font-size: 15px; margin-bottom: 0.5rem; color: var(--ink); }
+  .step-body { font-size: 13px; color: var(--ink-soft); line-height: 1.65; flex: 1; }
+  .step-tag { display: inline-block; margin-top: 0.8rem; font-size: 12px; font-weight: 500; color: var(--accent); background: var(--accent-light); padding: 4px 10px; border-radius: 100px; align-self: flex-start; }
+  .pricing-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 1.5rem; margin-top: 3rem; }
+  .price-card { background: #fff; border: 0.5px solid var(--border); border-radius: 16px; padding: 1.75rem; }
+  .price-card.featured { border-color: var(--accent); border-width: 1.5px; }
+  .price-label { font-size: 11px; font-weight: 500; letter-spacing: 0.1em; text-transform: uppercase; color: var(--ink-muted); margin-bottom: 0.8rem; }
+  .price-label.featured-label { color: var(--accent); }
+  .price-amount { font-family: 'DM Serif Display', serif; font-size: 2rem; line-height: 1; color: var(--ink); margin-bottom: 0.3rem; }
+  .price-unit { font-size: 12px; color: var(--ink-muted); margin-bottom: 1.25rem; }
+  .price-divider { height: 0.5px; background: var(--border-soft); margin-bottom: 1.25rem; }
+  .price-features { list-style: none; display: flex; flex-direction: column; gap: 8px; }
+  .price-features li { font-size: 13px; color: var(--ink-soft); display: flex; gap: 8px; align-items: flex-start; }
+  .price-features li::before { content: '›'; color: var(--accent); font-weight: 500; flex-shrink: 0; margin-top: 1px; }
+  .price-note { margin-top: 1rem; font-size: 11px; color: var(--ink-muted); font-style: italic; line-height: 1.6; }
+  .why-grid { display: grid; grid-template-columns: repeat(3, 1fr); gap: 1.5rem; margin-top: 3rem; }
+  .why-card { padding: 1.25rem 0; border-top: 1.5px solid var(--accent); }
+  .why-num { font-family: 'DM Serif Display', serif; font-size: 1.5rem; color: var(--accent); margin-bottom: 0.5rem; }
+  .why-title { font-weight: 500; font-size: 14px; margin-bottom: 0.4rem; color: var(--ink); }
+  .why-body { font-size: 13px; color: var(--ink-soft); line-height: 1.6; }
+  .contact-wrap { background: var(--surface-warm); border: 0.5px solid var(--border); border-radius: 20px; padding: 3rem; max-width: 900px; margin: 0 auto 5rem; }
+  .contact-inner { display: grid; grid-template-columns: 1fr 1fr; gap: 3rem; align-items: start; }
+  .contact-left h2 { font-family: 'DM Serif Display', serif; font-size: clamp(1.4rem, 2.5vw, 1.9rem); color: var(--ink); margin-bottom: 0.75rem; letter-spacing: -0.02em; line-height: 1.2; }
+  .contact-left p { font-size: 14px; color: var(--ink-soft); line-height: 1.7; margin-top: 1rem; }
+  .form-group { display: flex; flex-direction: column; gap: 10px; }
+  .form-row { display: grid; grid-template-columns: 1fr 1fr; gap: 10px; }
+  .field-wrap { display: flex; flex-direction: column; gap: 5px; }
+  .field-label { font-size: 11px; font-weight: 500; letter-spacing: 0.08em; text-transform: uppercase; color: var(--ink-muted); }
+  .field-input, .field-select, .field-textarea { background: #fff; border: 0.5px solid var(--border); border-radius: 10px; padding: 10px 14px; font-size: 14px; font-family: 'DM Sans', sans-serif; color: var(--ink); outline: none; transition: border-color 0.2s; width: 100%; }
+  .field-input::placeholder, .field-textarea::placeholder { font-size: 11px; color: var(--ink-muted); }
+  .field-input:focus, .field-select:focus, .field-textarea:focus { border-color: var(--accent); }
+  .field-select { appearance: none; cursor: pointer; color: var(--ink-muted); font-size: 11px; }
+  .field-select.has-value { color: var(--ink); font-size: 14px; }
+  .field-textarea { resize: none; height: 90px; line-height: 1.6; }
+  .form-submit { background: var(--accent); color: #fff; border: none; padding: 12px 28px; border-radius: 100px; font-size: 14px; font-family: 'DM Sans', sans-serif; font-weight: 500; cursor: pointer; transition: background 0.2s; align-self: flex-start; margin-top: 4px; }
+  .form-submit:hover { background: var(--accent-mid); }
+  .form-submit:disabled { opacity: 0.6; cursor: not-allowed; }
+  .form-success { display: none; background: #fff; border: 0.5px solid var(--border); border-radius: 12px; padding: 1.5rem; text-align: center; }
+  .form-success .success-title { font-family: 'DM Serif Display', serif; font-size: 1.2rem; color: var(--ink); margin-bottom: 0.5rem; }
+  .form-success p { color: var(--ink-soft); font-size: 14px; line-height: 1.7; }
+  footer { border-top: 0.5px solid var(--border); padding: 2rem; text-align: center; font-size: 12px; color: var(--ink-muted); max-width: 900px; margin: 0 auto; }
+  @media (max-width: 640px) {
+    .hero { grid-template-columns: 1fr; gap: 2rem; }
+    .steps-grid, .pricing-grid { grid-template-columns: 1fr; }
+    .why-grid { grid-template-columns: 1fr; }
+    .contact-inner { grid-template-columns: 1fr; gap: 2rem; }
+    .form-row { grid-template-columns: 1fr; }
+    section { padding: 3.5rem 1.25rem; }
+    .contact-wrap { padding: 2rem 1.5rem; }
+  }
+</style>
+</head>
+<body>
+
+<nav>
+  <div class="nav-logo">Ante<span>.</span></div>
+  <button class="nav-cta" onclick="document.getElementById('contact').scrollIntoView({behavior:'smooth'})">預約免費諮詢</button>
+</nav>
+
+<div style="padding: 0 2rem;">
+  <div class="hero">
+    <div>
+      <div class="hero-eyebrow">AI 流程顧問</div>
+      <h1>一張表填完，<br><em>後面全部自動跑</em></h1>
+      <p class="hero-body">針對 50 人以下的公司，找出最值得自動化的流程，用最低的成本驗證 AI 能不能真的幫到這個業務。</p>
+      <div class="hero-cta-group">
+        <button class="btn-primary" onclick="document.getElementById('pricing').scrollIntoView({behavior:'smooth'})">看看怎麼合作</button>
+        <button class="btn-ghost" onclick="document.getElementById('how').scrollIntoView({behavior:'smooth'})">流程是什麼？</button>
+      </div>
+    </div>
+    <div class="hero-visual">
+      <div class="process-row before">
+        <div class="process-icon">📋</div>
+        <div>
+          <div class="process-label">現在的狀況</div>
+          <div class="process-sub">資料散在 5 個地方，每次都要手動整合</div>
+        </div>
+        <span class="process-badge badge-red">4 小時 / 週</span>
+      </div>
+      <div class="arrow-row">↓</div>
+      <div class="process-row after">
+        <div class="process-icon">✦</div>
+        <div>
+          <div class="process-label">自動化之後</div>
+          <div class="process-sub">填一個表單，系統自動整合並通知相關人員</div>
+        </div>
+        <span class="process-badge badge-green">15 分鐘</span>
+      </div>
+    </div>
+  </div>
+</div>
+
+<div class="divider"></div>
+
+<section id="how">
+  <div class="section-eyebrow">合作流程</div>
+  <h2 class="section-title">在決定之前，<br>先把數字算清楚</h2>
+  <p class="section-body">大部分的顧問在確認值不值得做之前，就要求一大筆預算。Ante 的設計是把風險留在開始之前。</p>
+  <div class="steps-grid">
+    <div class="step-card">
+      <div class="step-num">01</div>
+      <div class="step-title">流程健診</div>
+      <div class="step-body">訪談實際處理這個流程的人員，不只是管理層。釐清資料從哪來、卡在哪裡、哪一段最浪費時間。</div>
+      <span class="step-tag">約 15 小時</span>
+    </div>
+    <div class="step-card">
+      <div class="step-num">02</div>
+      <div class="step-title">評估報告</div>
+      <div class="step-body">交付一份書面報告：這套工具每月的維運成本、可以節省的人時，以及投資回收的時間軸。讓決策有數字依據。</div>
+      <span class="step-tag">完整的決策依據</span>
+    </div>
+    <div class="step-card">
+      <div class="step-num">03</div>
+      <div class="step-title">工具開發</div>
+      <div class="step-body">確認要進入開發後，交付一個可以直接使用的工具，不是 prototype，是能在正式環境跑的東西。</div>
+      <span class="step-tag">約 2–3 週</span>
+    </div>
+    <div class="step-card">
+      <div class="step-num">04</div>
+      <div class="step-title">技術交接</div>
+      <div class="step-body">附完整的操作與維修文件。工具的邏輯對團隊透明，往後換人管理也不會變成黑盒子。</div>
+      <span class="step-tag">團隊能自行接手</span>
+    </div>
+  </div>
+</section>
+
+<div class="divider"></div>
+
+<section id="pricing">
+  <div class="section-eyebrow">收費方式</div>
+  <h2 class="section-title">先確認值不值得，<br>再決定要不要做</h2>
+  <p class="section-body">第一階段的費用刻意壓低，讓企業在幾乎沒有風險的情況下，取得一份清楚的可行性評估。</p>
+  <div class="pricing-grid">
+    <div class="price-card">
+      <div class="price-label">第一階段</div>
+      <div class="price-amount">NT$5,000</div>
+      <div class="price-unit">流程健診 + 評估報告</div>
+      <div class="price-divider"></div>
+      <ul class="price-features">
+        <li>訪談實際操作流程的人員</li>
+        <li>盤點資料流向與流程瓶頸</li>
+        <li>試算自動化後的成本與時間節省</li>
+        <li>交付書面評估報告</li>
+        <li>完成後即結案，不進入開發也完全沒問題</li>
+      </ul>
+    </div>
+    <div class="price-card featured">
+      <div class="price-label featured-label">第二階段</div>
+      <div class="price-amount">NT$50,000</div>
+      <div class="price-unit">工具開發與交付（頭款 50%，驗收後付尾款）</div>
+      <div class="price-divider"></div>
+      <ul class="price-features">
+        <li>依評估報告設計自動化流程</li>
+        <li>兩到三週內交付可直接使用的工具</li>
+        <li>操作說明與技術轉移文件</li>
+        <li>交付後一個月內的問題免費調整</li>
+      </ul>
+      <p class="price-note">實際報價依流程複雜度與所需串接系統而異，將於第一階段評估報告中載明。雲端工具訂閱費用另計，由企業直接購買，Ante 協助設定與串接。</p>
+    </div>
+  </div>
+</section>
+
+<div class="divider"></div>
+
+<section>
+  <div class="section-eyebrow">關於 Ante</div>
+  <h2 class="section-title">不是工程師背景，<br>反而更懂流程卡在哪</h2>
+  <p class="section-body">Ante 來自 HR 與營運管理背景，對人員異動、排程調配、重複性行政作業的痛點有第一手的理解，也更知道怎麼跟非技術團隊說清楚工具的邏輯。</p>
+  <div class="why-grid">
+    <div class="why-card">
+      <div class="why-num">HR</div>
+      <div class="why-title">懂營運痛點</div>
+      <div class="why-body">從流程管理的角度切入，而不是從技術角度往回推。</div>
+    </div>
+    <div class="why-card">
+      <div class="why-num">MVP</div>
+      <div class="why-title">數字先於感覺</div>
+      <div class="why-body">每個建議都附成本與時間的試算，讓投資決策有依據。</div>
+    </div>
+    <div class="why-card">
+      <div class="why-num">No&nbsp;Code</div>
+      <div class="why-title">工具不是黑盒子</div>
+      <div class="why-body">用團隊能理解和維護的方式建工具，交付的是能力，不是依賴。</div>
+    </div>
+  </div>
+</section>
+
+<div style="padding: 0 2rem;" id="contact">
+  <div class="contact-wrap">
+    <div class="contact-inner">
+      <div class="contact-left">
+        <h2>在決定之前，<br>先聊聊</h2>
+        <p>填完之後會在 48 小時內回覆，安排一次 30 分鐘的初步對話。不推銷，不催決定。</p>
+      </div>
+      <div class="contact-right">
+        <div id="contact-form">
+          <div class="form-group">
+            <div class="form-row">
+              <div class="field-wrap">
+                <div class="field-label">稱呼</div>
+                <input class="field-input" id="f-name" type="text" placeholder="王小明" />
+              </div>
+              <div class="field-wrap">
+                <div class="field-label">聯絡方式</div>
+                <input class="field-input" id="f-contact" type="text" placeholder="email 或 LINE ID" />
+              </div>
+            </div>
+            <div class="form-row">
+              <div class="field-wrap">
+                <div class="field-label">產業</div>
+                <input class="field-input" id="f-industry" type="text" placeholder="製造、批發、餐飲…" />
+              </div>
+              <div class="field-wrap">
+                <div class="field-label">公司規模</div>
+                <select class="field-select" id="f-size" onchange="this.classList.add('has-value')">
+                  <option value="" disabled selected>選擇人數</option>
+                  <option>10 人以下</option>
+                  <option>10–30 人</option>
+                  <option>30–50 人</option>
+                  <option>50 人以上</option>
+                </select>
+              </div>
+            </div>
+            <div class="field-wrap">
+              <div class="field-label">想優化的流程</div>
+              <textarea class="field-textarea" id="f-flow" placeholder="簡單描述目前的狀況，或卡在哪裡都可以"></textarea>
+            </div>
+            <button class="form-submit" id="submit-btn" onclick="handleSubmit()">送出 →</button>
+          </div>
+        </div>
+        <div class="form-success" id="form-success">
+          <p class="success-title">收到了，謝謝</p>
+          <p>會在 48 小時內透過填寫的聯絡方式回覆，安排初步對話的時間。</p>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+
+<footer>© 2025 Ante · Taipei</footer>
+
+<script>
+const GAS_URL = 'https://script.google.com/macros/s/AKfycbzge2NGyzWS65i1v2pxZr1deEpMbNrqwXCVl2VgC43VK2r4Oe9FsBIRh0HtxS_5XeLV/exec';
+
+function handleSubmit() {
+  const ids = ['f-name','f-contact','f-industry','f-size','f-flow'];
+  let valid = true;
+  ids.forEach(id => {
+    const el = document.getElementById(id);
+    if (!el.value.trim()) {
+      el.style.borderColor = 'rgba(200,80,60,0.5)';
+      setTimeout(() => el.style.borderColor = '', 2000);
+      valid = false;
+    }
+  });
+  if (!valid) return;
+  const btn = document.getElementById('submit-btn');
+  btn.disabled = true;
+  btn.textContent = '送出中…';
+  const data = {
+    name: document.getElementById('f-name').value.trim(),
+    contact: document.getElementById('f-contact').value.trim(),
+    industry: document.getElementById('f-industry').value.trim(),
+    size: document.getElementById('f-size').value,
+    flow: document.getElementById('f-flow').value.trim()
+  };
+  fetch(GAS_URL, {
+    method: 'POST',
+    mode: 'no-cors',
+    headers: { 'Content-Type': 'application/json' },
+    body: JSON.stringify(data)
+  })
+  .then(() => {
+    document.getElementById('contact-form').style.display = 'none';
+    document.getElementById('form-success').style.display = 'block';
+  })
+  .catch(() => {
+    btn.disabled = false;
+    btn.textContent = '送出 →';
+    alert('送出失敗，請稍後再試');
+  });
+}
+</script>
+</body>
+</html>
