@@ -107,14 +107,35 @@
   .form-success { display: none; background: #fff; border: 0.5px solid var(--border); border-radius: 12px; padding: 1.5rem; text-align: center; }
   .form-success .success-title { font-family: 'DM Serif Display', serif; font-size: 1.2rem; color: var(--ink); margin-bottom: 0.5rem; }
   .form-success p { color: var(--ink-soft); font-size: 14px; line-height: 1.7; }
+
+  /* ── Why Ante spectrum block ── */
+  .why-section { padding: 5rem 2rem; max-width: 900px; margin: 0 auto; }
+  .spectrum { display: flex; border: 0.5px solid var(--border); border-radius: 16px; overflow: hidden; margin-top: 2.5rem; }
+  .sp-col { flex: 1; padding: 1.5rem 1.25rem; position: relative; }
+  .sp-col:not(:last-child) { border-right: 0.5px solid var(--border); }
+  .sp-col.sp-highlight { background: var(--surface-warm); }
+  .sp-col.sp-muted { opacity: 0.5; }
+  .sp-tag { font-size: 10px; font-weight: 500; letter-spacing: 0.1em; text-transform: uppercase; color: var(--ink-muted); margin-bottom: 0.75rem; }
+  .sp-label { font-size: 14px; font-weight: 500; color: var(--ink); margin-bottom: 0.5rem; line-height: 1.35; }
+  .sp-desc { font-size: 12.5px; color: var(--ink-soft); line-height: 1.65; }
+  .sp-badge { display: inline-block; margin-top: 1rem; font-size: 11px; font-weight: 500; padding: 3px 10px; border-radius: 100px; }
+  .sp-badge-bad { background: rgba(200,80,60,0.08); color: #993c1d; }
+  .sp-badge-good { background: var(--accent); color: #fff; }
+  .sp-bar { position: absolute; top: 0; left: 0; right: 0; height: 3px; background: var(--accent); }
+
   footer { border-top: 0.5px solid var(--border); padding: 2rem; text-align: center; font-size: 12px; color: var(--ink-muted); max-width: 900px; margin: 0 auto; }
+
   @media (max-width: 640px) {
     .steps-grid { grid-template-columns: 1fr; }
     .advisor-grid { grid-template-columns: 1fr; }
     .contact-inner { grid-template-columns: 1fr; gap: 2rem; }
     .form-row { grid-template-columns: 1fr; }
     section { padding: 3.5rem 1.25rem; }
+    .why-section { padding: 3.5rem 1.25rem; }
     .contact-wrap { padding: 2rem 1.5rem; }
+    .spectrum { flex-direction: column; }
+    .sp-col:not(:last-child) { border-right: none; border-bottom: 0.5px solid var(--border); }
+    .sp-col.sp-muted { opacity: 1; }
   }
 </style>
 </head>
@@ -197,7 +218,38 @@
 </div>
 
 <div id="page-info" class="page">
-  <section id="about" style="padding-top: 7rem;">
+
+  <!-- ── NEW: Why Ante concept block ── -->
+  <div class="why-section" style="padding-top: 7rem;">
+    <div class="section-eyebrow">為什麼選 Ante</div>
+    <h2 class="section-title">導入自動化，<br>不一定要從整個系統開始</h2>
+    <p class="section-body">大多數企業卡住的原因不是不想做，而是選項太極端——自己摸索太慢，找顧問公司太貴。Ante 是中間那條路。</p>
+    <div class="spectrum">
+      <div class="sp-col sp-muted">
+        <div class="sp-tag">路線 A</div>
+        <div class="sp-label">內部自行研究</div>
+        <div class="sp-desc">學習成本高，容易在工具選型上耗掉大量時間，還不確定方向對不對。</div>
+        <span class="sp-badge sp-badge-bad">啟動太慢</span>
+      </div>
+      <div class="sp-col sp-highlight">
+        <div class="sp-bar"></div>
+        <div class="sp-tag">路線 B · Ante</div>
+        <div class="sp-label">先交付一個真的能跑的工具，確認值得投入後再擴大</div>
+        <div class="sp-desc">不需要工程團隊，不需要長期合約。從最值得動的環節切入，用幾週時間確認可行性。</div>
+        <span class="sp-badge sp-badge-good">風險可控</span>
+      </div>
+      <div class="sp-col sp-muted">
+        <div class="sp-tag">路線 C</div>
+        <div class="sp-label">委託 AI 顧問公司全案執行</div>
+        <div class="sp-desc">交付品質完整，維運支援也到位，但前期投入高，不適合還在評估階段的企業。</div>
+        <span class="sp-badge sp-badge-bad">成本太高</span>
+      </div>
+    </div>
+  </div>
+
+  <div class="divider"></div>
+
+  <section id="about">
     <div class="section-eyebrow">關於 Ante</div>
     <h2 class="section-title">協助中小企業踏出<br>自動化流程的第一步</h2>
     <div class="section-body">
